@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fiche mémo quishing – à distribuer</title>
+<style>
+:root{--ink:#1c1f2b;--muted:#5f657a;--line:#e3e6ef;--orange:#e8590c;--green:#2b8a3e;--red:#e03131;--blue:#1e6fd9}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#e9ebf2;line-height:1.4}
+.panel{background:#fff;border-bottom:1px solid var(--line);padding:16px 18px;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.panel .row{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.panel label{font-size:.82rem;font-weight:600;display:block;margin-bottom:4px}
+.panel input{font:inherit;padding:9px 11px;border:1.5px solid #cfd4e2;border-radius:8px;width:100%}
+.panel button{font:inherit;font-weight:600;padding:10px 16px;border:0;border-radius:8px;cursor:pointer;background:#1e6fd9;color:#fff}
+.panel button.sec{background:#eef1f7;color:var(--ink)}
+.panel .hint{width:100%;font-size:.8rem;color:var(--muted);margin:4px 0 0}
+
+/* Feuille A4 contenant 2 fiches A5 (à découper) */
+.sheet{width:210mm;height:297mm;background:#fff;margin:20px auto;box-shadow:0 8px 30px rgba(0,0,0,.12);display:flex;flex-direction:column}
+.fiche{height:148.5mm;padding:9mm 10mm;display:flex;flex-direction:column;border-bottom:1px dashed #bbb}
+.fiche:last-child{border-bottom:0}
+.head{display:flex;align-items:center;gap:4mm;margin-bottom:3mm}
+.head .ico{font-size:11mm;line-height:1}
+.head h1{font-size:7.5mm;margin:0;line-height:1.1}
+.head p{margin:1mm 0 0;font-size:3.6mm;color:var(--muted)}
+.body{display:grid;grid-template-columns:1fr 1fr 40mm;gap:4mm;flex:1}
+.col h2{font-size:4.2mm;margin:0 0 2mm;padding-bottom:1mm;border-bottom:2px solid var(--line)}
+.col.alert h2{color:var(--orange);border-color:var(--orange)}
+.col.good h2{color:var(--green);border-color:var(--green)}
+.col ul{margin:0;padding:0;list-style:none}
+.col li{font-size:3.35mm;margin:0 0 1.8mm;padding-left:5.5mm;position:relative}
+.col li::before{position:absolute;left:0;top:0}
+.col.alert li::before{content:"🚩"}
+.col.good li::before{content:"✅"}
+.qrcol{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.qrcol img{width:38mm;height:38mm;image-rendering:pixelated;border:1px solid #ddd}
+.qrcol p{font-size:3mm;color:var(--muted);margin:2mm 0 0}
+.chain{display:flex;align-items:center;gap:1.5mm;font-size:3.1mm;background:#f6f7fb;border-radius:3mm;padding:2.5mm 3mm;margin:0 0 3mm}
+.chain span{flex:1;text-align:center}
+.chain i{font-style:normal;color:#aaa}
+.box{background:#fff4f4;border:1px solid #ffc9c9;border-radius:3mm;padding:2.5mm 3.5mm;font-size:3.3mm;margin-top:3mm}
+.box b{color:var(--red)}
+.foot{font-size:2.8mm;color:#9aa0b3;margin-top:2mm;text-align:center}
+
+@page{size:A4;margin:0}
+@media print{
+  body{background:#fff}
+  .panel{display:none!important}
+  .sheet{margin:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <div class="row">
+    <div style="flex:1 1 320px">
+      <label for="url">Adresse de la page de démonstration (QR « Rejouer la démo »)</label>
+      <input type="url" id="url" placeholder="https://votre-compte.github.io/quishing-demo/">
+    </div>
+    <button id="gen">Mettre à jour</button>
+    <button id="print" class="sec">🖨️ Imprimer / Enregistrer en PDF</button>
+    <p class="hint">Une feuille A4 contient 2 fiches A5 identiques, à découper le long des pointillés. Le QR renvoie vers la démonstration pour que chacun puisse la refaire ou la montrer à un proche.</p>
+  </div>
+</div>
+
+<div class="sheet" id="sheet">
+  <!-- la fiche est dupliquée par JS pour remplir la page -->
+  <section class="fiche" id="ficheTpl">
+    <div class="head">
+      <div class="ico">📱</div>
+      <div>
+        <h1>Quishing : le QR code piégé</h1>
+        <p>Fiche mémo – semaine de sensibilisation cybersécurité</p>
+      </div>
+    </div>
+    <div class="chain">
+      <span>🖨️ QR imprimé</span><i>→</i><span>📱 Scan</span><i>→</i><span>🔀 Faux site</span><i>→</i><span>🪤 Page piégée</span><i>→</i><span>🔓 Identifiants volés</span>
+    </div>
+    <div class="body">
+      <div class="col alert">
+        <h2>Signaux d'alerte</h2>
+        <ul>
+          <li>Un QR autocollant collé par-dessus l'original, mal aligné.</li>
+          <li>Une URL raccourcie (bit.ly, tinyurl…) ou un domaine étrange.</li>
+          <li>Une page qui demande vos identifiants juste après un scan.</li>
+          <li>Un sentiment d'urgence ou une récompense : « offre limitée », « café gratuit », « colis bloqué ».</li>
+        </ul>
+      </div>
+      <div class="col good">
+        <h2>Bons réflexes</h2>
+        <ul>
+          <li>Lire l'aperçu du lien affiché par l'appareil photo avant d'ouvrir.</li>
+          <li>Vérifier l'URL complète dans la barre d'adresse avant toute saisie.</li>
+          <li>Se méfier des QR en lieu public (parking, affiches, tables, flyers).</li>
+          <li>Ne jamais saisir d'identifiants après un scan non sollicité : passer par l'application ou le site officiel.</li>
+        </ul>
+      </div>
+      <div class="qrcol">
+        <img class="qr" alt="QR code vers la démonstration">
+        <p>Refaire la démo et le quiz,<br>ou les montrer à un proche</p>
+      </div>
+    </div>
+    <div class="box"><b>J'ai cliqué, scanné ou saisi mes identifiants par erreur ?</b> Je change mon mot de passe immédiatement et je préviens le service informatique. Réagir vite est le bon réflexe, personne ne vous en voudra.</div>
+    <p class="foot">Un QR code n'est qu'un lien déguisé : scanner un QR inconnu, c'est cliquer sur un lien envoyé par un inconnu.</p>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function(){
+  function el(id){return document.getElementById(id);}
+  function defaultUrl(){
+    if(location.protocol==='file:') return '';
+    return location.origin + location.pathname.replace(/[^\/]*$/,'');
+  }
+  function makeDataUrl(text,size){
+    var qr=qrcode(0,'M'); qr.addData(text,'Byte'); qr.make();
+    var n=qr.getModuleCount(), m=4, s=Math.max(2,Math.floor(size/(n+2*m))), d=(n+2*m)*s;
+    var c=document.createElement('canvas'); c.width=d; c.height=d;
+    var ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,d,d); ctx.fillStyle='#000';
+    for(var r=0;r<n;r++)for(var k=0;k<n;k++)if(qr.isDark(r,k))ctx.fillRect((k+m)*s,(r+m)*s,s,s);
+    return c.toDataURL('image/png');
+  }
+  // dupliquer la fiche (2 par A4)
+  var tpl=el('ficheTpl'); var clone=tpl.cloneNode(true); clone.removeAttribute('id'); el('sheet').appendChild(clone);
+  function update(){
+    var url=el('url').value.trim();
+    if(!url || typeof qrcode==='undefined') return;
+    var data=makeDataUrl(url,800);
+    var imgs=document.querySelectorAll('img.qr');
+    for(var j=0;j<imgs.length;j++) imgs[j].src=data;
+  }
+  el('url').value = defaultUrl();
+  el('gen').addEventListener('click',update);
+  el('url').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();update();}});
+  el('print').addEventListener('click',function(){update();setTimeout(function(){window.print();},150);});
+  update();
+})();
+</script>
+</body>
+</html>

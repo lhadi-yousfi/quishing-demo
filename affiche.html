@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Affiches QR à imprimer – démo quishing</title>
+<style>
+:root{--ink:#1c1f2b;--muted:#5f657a;--line:#e3e6ef}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#e9ebf2}
+/* ---- barre de réglages (écran uniquement) ---- */
+.panel{background:#fff;border-bottom:1px solid var(--line);padding:16px 18px;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.panel .row{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.panel label{font-size:.82rem;font-weight:600;display:block;margin-bottom:4px}
+.panel input,.panel select{font:inherit;padding:9px 11px;border:1.5px solid #cfd4e2;border-radius:8px;min-width:200px}
+.panel input[type=url]{flex:1 1 320px}
+.panel button{font:inherit;font-weight:600;padding:10px 16px;border:0;border-radius:8px;cursor:pointer;background:#1e6fd9;color:#fff}
+.panel button.sec{background:#eef1f7;color:var(--ink)}
+.panel .hint{width:100%;font-size:.8rem;color:var(--muted);margin:4px 0 0}
+.err{background:#fff0f0;border:1px solid #ffb3b3;color:#a61e1e;border-radius:8px;padding:10px 12px;font-size:.9rem;margin:10px auto 0;max-width:900px}
+
+/* ---- page A4 ---- */
+.sheet{width:210mm;min-height:297mm;background:#fff;margin:20px auto;padding:18mm 16mm;box-shadow:0 8px 30px rgba(0,0,0,.12);display:flex;flex-direction:column;align-items:center;text-align:center;page-break-after:always}
+.sheet.hidden{display:none}
+.big{font-size:22mm;line-height:1;margin:0 0 6mm}
+.title{font-size:12mm;font-weight:900;line-height:1.1;margin:0 0 5mm}
+.sub{font-size:6mm;color:#2f3446;margin:0 0 8mm;max-width:160mm}
+.qr{width:95mm;height:95mm;image-rendering:pixelated;border:1px solid #ddd}
+.scan{font-size:6.5mm;font-weight:700;margin:7mm 0 2mm}
+.small{font-size:4mm;color:var(--muted);max-width:160mm}
+.urgent{display:inline-block;background:#fff3cd;border:1px solid #f4d37a;border-radius:6mm;padding:2mm 6mm;font-size:5mm;font-weight:700;margin-top:6mm}
+.footer-note{margin-top:auto;font-size:3.2mm;color:#9aa0b3}
+
+/* ---- variantes ---- */
+.sheet[data-v="cafe"]{background:linear-gradient(180deg,#fff8ee,#fff)}
+.sheet[data-v="wifi"]{background:linear-gradient(180deg,#eaf2ff,#fff)}
+.sheet[data-v="jeu"]{background:linear-gradient(180deg,#f3ecff,#fff)}
+
+/* ---- planche d'autocollants ---- */
+.stickers{display:grid;grid-template-columns:repeat(2,1fr);gap:8mm;width:100%}
+.sticker{border:1px dashed #bbb;border-radius:4mm;padding:6mm 4mm;display:flex;flex-direction:column;align-items:center;gap:3mm}
+.sticker .qr{width:48mm;height:48mm}
+.sticker b{font-size:5mm}
+.sticker span{font-size:3.4mm;color:var(--muted)}
+
+@page{size:A4;margin:0}
+@media print{
+  body{background:#fff}
+  .panel,.err{display:none!important}
+  .sheet{margin:0;box-shadow:none;width:210mm;height:297mm}
+}
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <div class="row">
+    <div style="flex:1 1 320px">
+      <label for="url">Adresse de la page de démonstration (le QR pointera ici)</label>
+      <input type="url" id="url" placeholder="https://votre-compte.github.io/quishing-demo/">
+    </div>
+    <div>
+      <label for="variant">Affiche</label>
+      <select id="variant">
+        <option value="cafe">☕ Café offert</option>
+        <option value="wifi">📶 Wi-Fi invité</option>
+        <option value="jeu">🎁 Jeu-concours</option>
+        <option value="stickers">🏷️ Planche d'autocollants (6)</option>
+        <option value="all">Tout imprimer (4 pages)</option>
+      </select>
+    </div>
+    <button id="gen">Mettre à jour</button>
+    <button id="print" class="sec">🖨️ Imprimer / Enregistrer en PDF</button>
+    <p class="hint">L'adresse est pré-remplie automatiquement avec celle de ce site. Dans la boîte d'impression, choisissez « Enregistrer au format PDF » si vous voulez un fichier. Les affiches ne reproduisent aucune marque réelle.</p>
+  </div>
+</div>
+<p id="err" class="err" hidden>La librairie QR n'a pas pu être chargée (connexion Internet nécessaire).</p>
+
+<!-- ☕ CAFÉ -->
+<section class="sheet" data-v="cafe">
+  <div class="big">☕</div>
+  <h1 class="title">Une pause café offerte !</h1>
+  <p class="sub">Pour vous remercier de votre engagement, une boisson chaude est offerte au distributeur cette semaine.</p>
+  <img class="qr" alt="QR code">
+  <p class="scan">📱 Scannez pour récupérer votre bon</p>
+  <p class="small">Un code personnel s'affichera sur votre téléphone. Présentez-le au distributeur.</p>
+  <span class="urgent">⏱ Offre limitée aux 50 premiers scans</span>
+  <p class="footer-note">Exercice de sensibilisation cybersécurité – aucune donnée n'est collectée.</p>
+</section>
+
+<!-- 📶 WI-FI -->
+<section class="sheet" data-v="wifi">
+  <div class="big">📶</div>
+  <h1 class="title">Wi-Fi invité haut débit</h1>
+  <p class="sub">Nouveau ! Connectez votre téléphone au réseau invité en un scan, sans mot de passe compliqué à recopier.</p>
+  <img class="qr" alt="QR code">
+  <p class="scan">📱 Scannez pour vous connecter</p>
+  <p class="small">Accès gratuit 24 h · Renouvelable · Compatible iPhone et Android</p>
+  <span class="urgent">✅ Connexion automatique et sécurisée</span>
+  <p class="footer-note">Exercice de sensibilisation cybersécurité – aucune donnée n'est collectée.</p>
+</section>
+
+<!-- 🎁 JEU -->
+<section class="sheet" data-v="jeu">
+  <div class="big">🎁</div>
+  <h1 class="title">Grand jeu de la semaine</h1>
+  <p class="sub">Tentez de gagner un panier gourmand, une place de parking pendant 1 mois ou une demi-journée offerte !</p>
+  <img class="qr" alt="QR code">
+  <p class="scan">📱 Scannez pour participer</p>
+  <p class="small">Tirage au sort vendredi à 16 h. Une participation par personne.</p>
+  <span class="urgent">⏰ Inscriptions closes jeudi minuit</span>
+  <p class="footer-note">Exercice de sensibilisation cybersécurité – aucune donnée n'est collectée.</p>
+</section>
+
+<!-- 🏷️ AUTOCOLLANTS -->
+<section class="sheet" data-v="stickers">
+  <h1 class="title" style="font-size:9mm">Planche d'autocollants – à découper</h1>
+  <p class="small" style="margin-bottom:6mm">À coller sur les tables de la cafétéria, l'ascenseur, la machine à café, le tableau d'affichage, les WC, le parking…</p>
+  <div class="stickers">
+    <div class="sticker"><img class="qr" alt="QR code"><b>☕ Café offert</b><span>Scannez pour récupérer votre bon</span></div>
+    <div class="sticker"><img class="qr" alt="QR code"><b>📶 Wi-Fi gratuit</b><span>Scannez pour vous connecter</span></div>
+    <div class="sticker"><img class="qr" alt="QR code"><b>🍽️ Menu de la semaine</b><span>Scannez pour consulter</span></div>
+    <div class="sticker"><img class="qr" alt="QR code"><b>🅿️ Parking : réservez votre place</b><span>Scannez pour réserver</span></div>
+    <div class="sticker"><img class="qr" alt="QR code"><b>📋 Sondage 1 minute</b><span>Votre avis compte !</span></div>
+    <div class="sticker"><img class="qr" alt="QR code"><b>🔧 Signaler un problème</b><span>Scannez pour déclarer</span></div>
+  </div>
+  <p class="footer-note">Exercice de sensibilisation cybersécurité – aucune donnée n'est collectée.</p>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function(){
+  function el(id){return document.getElementById(id);}
+  function defaultUrl(){
+    if(location.protocol==='file:') return '';
+    return location.origin + location.pathname.replace(/[^\/]*$/,'');
+  }
+  function makeDataUrl(text,size){
+    var qr=qrcode(0,'M'); qr.addData(text,'Byte'); qr.make();
+    var n=qr.getModuleCount(), m=4, s=Math.max(2,Math.floor(size/(n+2*m))), d=(n+2*m)*s;
+    var c=document.createElement('canvas'); c.width=d; c.height=d;
+    var ctx=c.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,d,d); ctx.fillStyle='#000';
+    for(var r=0;r<n;r++)for(var k=0;k<n;k++)if(qr.isDark(r,k))ctx.fillRect((k+m)*s,(r+m)*s,s,s);
+    return c.toDataURL('image/png');
+  }
+  function update(){
+    var url=el('url').value.trim();
+    var v=el('variant').value;
+    var sheets=document.querySelectorAll('.sheet');
+    for(var i=0;i<sheets.length;i++){
+      sheets[i].classList.toggle('hidden', v!=='all' && sheets[i].getAttribute('data-v')!==v);
+    }
+    if(typeof qrcode==='undefined'){el('err').hidden=false;return;}
+    if(!url){return;}
+    var data=makeDataUrl(url,1200);
+    var imgs=document.querySelectorAll('img.qr');
+    for(var j=0;j<imgs.length;j++) imgs[j].src=data;
+    el('err').hidden=true;
+    try{localStorage.setItem('quishing-url',url);}catch(e){}
+  }
+  var saved=''; try{saved=localStorage.getItem('quishing-url')||'';}catch(e){}
+  el('url').value = defaultUrl() || saved;
+  el('gen').addEventListener('click',update);
+  el('variant').addEventListener('change',update);
+  el('url').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();update();}});
+  el('print').addEventListener('click',function(){update();setTimeout(function(){window.print();},150);});
+  update();
+})();
+</script>
+</body>
+</html>
