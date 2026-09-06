@@ -39,9 +39,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Hel
 .sheet[data-v="jeu"]{background:linear-gradient(180deg,#f3ecff,#fff)}
 
 /* ---- planche d'autocollants ---- */
-.stickers{display:grid;grid-template-columns:repeat(2,1fr);gap:8mm;width:100%}
-.sticker{border:1px dashed #bbb;border-radius:4mm;padding:6mm 4mm;display:flex;flex-direction:column;align-items:center;gap:3mm}
-.sticker .qr{width:48mm;height:48mm}
+.stickers{display:grid;grid-template-columns:repeat(2,1fr);gap:5mm;width:100%}
+.sticker{border:1px dashed #bbb;border-radius:4mm;padding:4mm 4mm;display:flex;flex-direction:column;align-items:center;gap:2mm}
+.sticker .qr{width:40mm;height:40mm}
+.sheet[data-v="stickers"]{padding-top:12mm;padding-bottom:10mm}
 .sticker b{font-size:5mm}
 .sticker span{font-size:3.4mm;color:var(--muted)}
 
@@ -49,7 +50,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Hel
 @media print{
   body{background:#fff}
   .panel,.err{display:none!important}
-  .sheet{margin:0;box-shadow:none;width:210mm;height:297mm}
+  .sheet{margin:0;box-shadow:none;width:210mm;height:297mm;overflow:hidden}
 }
 </style>
 </head>
