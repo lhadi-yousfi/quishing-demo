@@ -160,7 +160,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Hel
     try{localStorage.setItem('quishing-url',url);}catch(e){}
   }
   var saved=''; try{saved=localStorage.getItem('quishing-url')||'';}catch(e){}
-  el('url').value = defaultUrl() || saved;
+  // paramètres optionnels : affiche.html?url=https://...&v=all
+  var qs=new URLSearchParams(location.search);
+  el('url').value = qs.get('url') || defaultUrl() || saved;
+  if(qs.get('v')) el('variant').value=qs.get('v');
   el('gen').addEventListener('click',update);
   el('variant').addEventListener('change',update);
   el('url').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();update();}});
