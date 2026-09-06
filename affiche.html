@@ -21,7 +21,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Hel
 .err{background:#fff0f0;border:1px solid #ffb3b3;color:#a61e1e;border-radius:8px;padding:10px 12px;font-size:.9rem;margin:10px auto 0;max-width:900px}
 
 /* ---- page A4 ---- */
-.sheet{width:210mm;min-height:297mm;background:#fff;margin:20px auto;padding:18mm 16mm;box-shadow:0 8px 30px rgba(0,0,0,.12);display:flex;flex-direction:column;align-items:center;text-align:center;page-break-after:always}
+.sheet{width:210mm;min-height:297mm;background:#fff;margin:20px auto;padding:18mm 16mm;box-shadow:0 8px 30px rgba(0,0,0,.12);display:flex;flex-direction:column;align-items:center;text-align:center}
+.sheet:not(.hidden) ~ .sheet:not(.hidden){page-break-before:always}
 .sheet.hidden{display:none}
 .big{font-size:22mm;line-height:1;margin:0 0 6mm}
 .title{font-size:12mm;font-weight:900;line-height:1.1;margin:0 0 5mm}
