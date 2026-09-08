@@ -32,7 +32,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .top .sub{font-size:5.4mm;margin:3mm 0 0;font-weight:600;opacity:.97}
 
 /* corps */
-.body{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2mm 14mm 8mm}
+.body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4mm 14mm 14mm}
 .chips{display:flex;gap:3mm;flex-wrap:wrap;justify-content:center;margin:2mm 0 4mm}
 .chip{background:#f1f5f9;border:1px solid var(--line);border-radius:999px;padding:2mm 5mm;font-size:4mm;font-weight:700;color:#334155;display:flex;align-items:center;gap:2mm}
 .chip.g{background:#ecfdf3;border-color:#bbf7d0;color:#15803d}
@@ -44,7 +44,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .qrwrap::before,.qrwrap::after{content:"";position:absolute;width:9mm;height:9mm;border:3px solid var(--accent)}
 .qrwrap::before{top:-3px;left:-3px;border-right:0;border-bottom:0;border-radius:6mm 0 0 0}
 .qrwrap::after{bottom:-3px;right:-3px;border-left:0;border-top:0;border-radius:0 0 6mm 0}
-.qrwrap img{width:66mm;height:66mm;image-rendering:pixelated;display:block}
+.qrwrap img{width:74mm;height:74mm;image-rendering:pixelated;display:block}
 
 .how{font-size:4.4mm;color:#475569;margin:4mm 0 0;font-weight:600}
 .how b{color:var(--ink)}
@@ -87,7 +87,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
     <div class="gift">🎁</div>
     <div class="kicker">✨ RIEN QUE POUR VOUS ✨</div>
     <h1>Une bonne surprise<br>vous attend !</h1>
-    <p class="sub">Réservée aux collaborateurs cette semaine</p>
   </div>
 
   <div class="body">
@@ -104,14 +103,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
       <img class="qr" alt="QR code à scanner">
     </div>
 
-    <p class="how">📷 Ouvrez l'<b>appareil photo</b> de votre téléphone et visez le code.</p>
+    <p class="how">Ouvrez l'<b>appareil photo</b> de votre téléphone et visez le code.</p>
     <div class="cta"><span class="em">😊</span> N'hésitez pas, c'est pour vous !</div>
     <p class="reassure">Compatible iPhone et Android. Aucune application à installer. Offre valable quelques jours seulement.</p>
-  </div>
-
-  <div class="strip">
-    <div class="line"><span class="em">⏰</span><p>Ne passez pas à côté — scannez maintenant avant la fin de la semaine !</p></div>
-    <p class="mini">Affiche de campagne interne de sensibilisation à la cybersécurité.</p>
   </div>
 </section>
 
